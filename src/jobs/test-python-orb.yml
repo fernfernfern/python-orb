@@ -4,4 +4,4 @@ description: >
 executor: default
 steps:
   - run: python --version
-  - python-orb/install-pipenv
+  - install-pipenv

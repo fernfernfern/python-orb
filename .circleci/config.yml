@@ -90,7 +90,7 @@ workflows:
       # patch, minor, or major publishing
       - orb-tools/dev-promote-prod:
           name: dev-promote-patch
-          orb-name: circleci/orb-tools
+          orb-name: fernfernfern/python-orb
           ssh-fingerprints: "c8:df:89:8d:f5:3c:85:16:87:b1:53:b3:31:3d:9a:ea"
           cleanup-tags: true
           requires:
@@ -104,7 +104,7 @@ workflows:
       - orb-tools/dev-promote-prod:
           name: dev-promote-minor
           release: minor
-          orb-name: circleci/orb-tools
+          orb-name: fernfernfern/python-orb
           ssh-fingerprints: "c8:df:89:8d:f5:3c:85:16:87:b1:53:b3:31:3d:9a:ea"
           cleanup-tags: true
           requires:
