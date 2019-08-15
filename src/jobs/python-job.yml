@@ -5,7 +5,9 @@ parameters:
   install-deps:
     default: false
     type: boolean
-
+  test-steps:
+    default: "pipenv run python manage.py test"
+    type: string
 executor: default
 
 steps:
