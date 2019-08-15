@@ -14,7 +14,6 @@ parameters:
   test-steps:
     type: string
     default: "pipenv run python manage.py test"
-  
 
 executor: 
   default:
