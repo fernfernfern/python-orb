@@ -24,4 +24,5 @@ steps:
   - checkout
   - install-pipenv:
       and-deps: << parameters.install-deps >>
-  - run: << parameters.test-steps >>
+  - run: |
+      << parameters.test-steps >>
