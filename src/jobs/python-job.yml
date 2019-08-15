@@ -15,7 +15,7 @@ parameters:
     type: string
     default: "pipenv run python manage.py test"
 
-executor: 
+executor:
   default:
     python-version: << parameters.python-version >>
     debian-release: << parameters.debian-release >>
