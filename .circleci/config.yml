@@ -74,8 +74,10 @@ workflows:
   integration-tests_prod-release:
     jobs:
       - python-orb/test-python-orb:
+          name: test-python-dev
           filters: *integration-dev_filters
       - python-orb/test-python-orb:
+          name: test-python-master
           filters: *integration-master_filters
 
       # - your integration test jobs go here
@@ -85,47 +87,47 @@ workflows:
       # - and again, for tests triggered by commits to master
       # - only commits to master should potentially trigger a prod release
 
-  #     # patch, minor, or major publishing
-  #     - orb-tools/dev-promote-prod:
-  #         name: dev-promote-patch
-  #         orb-name: circleci/orb-tools
-  #         ssh-fingerprints: # your SSH key fingerprint
-  #         cleanup-tags: true
-  #         requires:
-  #           # - your integration testing jobs go here
-  #         filters:
-  #           branches:
-  #             ignore: /.*/
-  #           tags:
-  #             only: /master-patch.*/
+      # patch, minor, or major publishing
+      - orb-tools/dev-promote-prod:
+          name: dev-promote-patch
+          orb-name: circleci/orb-tools
+          ssh-fingerprints: "c8:df:89:8d:f5:3c:85:16:87:b1:53:b3:31:3d:9a:ea"
+          cleanup-tags: true
+          requires:
+            - test-python-master
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /master-patch.*/
 
-  #     - orb-tools/dev-promote-prod:
-  #         name: dev-promote-minor
-  #         release: minor
-  #         orb-name: circleci/orb-tools
-  #         ssh-fingerprints: # your SSH key fingerprint
-  #         cleanup-tags: true
-  #         requires:
-  #           # - your integration testing jobs go here
-  #         filters:
-  #           branches:
-  #             ignore: /.*/
-  #           tags:
-  #             only: /master-minor.*/
+      - orb-tools/dev-promote-prod:
+          name: dev-promote-minor
+          release: minor
+          orb-name: circleci/orb-tools
+          ssh-fingerprints: "c8:df:89:8d:f5:3c:85:16:87:b1:53:b3:31:3d:9a:ea"
+          cleanup-tags: true
+          requires:
+            - test-python-master
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /master-minor.*/
 
-  #     - orb-tools/dev-promote-prod:
-  #         name: dev-promote-major
-  #         release: major
-  #         orb-name: circleci/orb-tools
-  #         ssh-fingerprints: # your SSH key fingerprint
-  #         cleanup-tags: true
-  #         requires:
-  #           # - your integration testing jobs go here
-  #         filters:
-  #           branches:
-  #             ignore: /.*/
-  #           tags:
-  #             only: /master-major.*/
+      - orb-tools/dev-promote-prod:
+          name: dev-promote-major
+          release: major
+          orb-name: fernfernfern/python-orb
+          ssh-fingerprints: "c8:df:89:8d:f5:3c:85:16:87:b1:53:b3:31:3d:9a:ea"
+          cleanup-tags: true
+          requires:
+            - test-python-master
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /master-major.*/
 
 
 
