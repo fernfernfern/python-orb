@@ -5,20 +5,10 @@ parameters:
   install-deps:
     default: false
     type: boolean
-  python-version:
-    type: string
-    default: "2.7"
-  debian-release:
-    type: string
-    default: "stretch"
-  test-steps:
-    type: string
-    default: "pipenv run python manage.py test"
 
-executor:
-  default:
-    python-version: << parameters.python-version >>
-    debian-release: << parameters.debian-release >>
+executor: default
 
 steps:
+  - install-pipenv:
+      and-deps: << parameters.install-deps >>
   - run: << parameters.test-steps >>

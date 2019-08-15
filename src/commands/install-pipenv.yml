@@ -1,5 +1,24 @@
 description: >
   Command that will install pipenv through pip
 
+parameters:
+  and-deps:
+    default: false
+    type: boolean
+
 steps:
   - run: sudo pip install pipenv
+  - when:
+      condition: << parameters.and-deps >>
+      steps:
+        - run: sudo chown -R circleci:circleci /usr/local/bin
+        - restore_cache:  # ensure this step occurs *before* installing dependencies
+            key: deps-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+        - run:
+            command: |
+              pipenv install
+        - save_cache:
+            key: deps-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+            paths:
+              - ".venv"
+              - "/usr/local/bin"

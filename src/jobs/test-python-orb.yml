@@ -1,26 +1,7 @@
 description: >
   This job is used to test the pthon orb
 
-parameters:
-  install-deps:
-    default: false
-    type: boolean
-
 executor: default
 steps:
   - run: python --version
   - install-pipenv
-  - when:
-      condition: << parameters.install-deps >>
-      steps:
-        - run: sudo chown -R circleci:circleci /usr/local/bin
-        - restore_cache:  # ensure this step occurs *before* installing dependencies
-            key: deps-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-        - run:
-            command: |
-              pipenv install
-        - save_cache:
-            key: deps-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-            paths:
-              - ".venv"
-              - "/usr/local/bin"
