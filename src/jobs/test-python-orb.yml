@@ -1,10 +1,7 @@
 description: >
   This job is used to test the pthon orb
 
-orbs:
-  python-orb: fernfernfern/python-orb@dev:alpha
-
-executor: python-orb/default
+executor: default
 steps:
   - run: python --version
   - python-orb/install-pipenv
