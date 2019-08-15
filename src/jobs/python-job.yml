@@ -8,7 +8,17 @@ parameters:
   test-steps:
     default: "pipenv run python manage.py test"
     type: string
-executor: default
+  python-version:
+    default: "2.7"
+    type: string
+  debian-release:
+    default: "stretch"
+    type: string
+
+executor:
+  name: default
+  python-version: << parameters.python-version >>
+  debian-release: << parameters.debian-release >>
 
 steps:
   - checkout
