@@ -14,7 +14,7 @@ usage:
           type: executor
       executor: << parameters.e >>
       steps:
-        - checkout 
+        - checkout
         - po/install-pipenv:
             and-deps: true
         - run: echo do anything you want to prepare
