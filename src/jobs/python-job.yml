@@ -20,17 +20,12 @@ executor:
   python-version: << parameters.python-version >>
   debian-release: << parameters.debian-release >>
 
-commands:
-  install-dependencies:
-    steps:
-      - when:
-          condition: << parameters.with-pipenv >>
-          steps:
-            - install-pipenv:
-                and-deps: << parameters.install-deps >>
-
 steps:
   - checkout
-  - install-dependencies
+  - when:
+    condition: << parameters.with-pipenv >>
+    steps:
+      - install-pipenv:
+          and-deps: << parameters.install-deps >>
   - run: |
       << parameters.test-steps >>
