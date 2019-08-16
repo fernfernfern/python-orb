@@ -18,16 +18,14 @@ steps:
         - run: virtualenv venv
         - run: echo source venv/bin/activate >> $BASH_ENV
   - when:
-    condition: << parameters.and-deps >>
-    steps:
-      - run: sudo chown -R circleci:circleci /usr/local/bin
-      - restore_cache:  # ensure this step occurs *before* installing dependencies
-          key: deps-{{ .Branch }}-{{ checksum "requirements.txt" }}
-      - run:
-          command: |
-            pip install -r "requirements.txt"
-      - save_cache:
-          key: deps-{{ .Branch }}-{{ checksum "requirements.txt" }}
-          paths:
-            - "venv"
-            - "/usr/local/bin"
+      condition: << parameters.and-deps >>
+      steps:
+        - run: sudo chown -R circleci:circleci /usr/local/bin
+        - restore_cache:
+            key: deps-{{ .Branch }}-{{ checksum "requirements.txt" }}
+        - run: pip install -r "requirements.txt"
+        - save_cache:
+            key: deps-{{ .Branch }}-{{ checksum "requirements.txt" }}
+            paths:
+              - "venv"
+              - "/usr/local/bin"
