@@ -1,0 +1,17 @@
+description: >
+  Using the python-orb with pipenv dependencies and a simple test command.
+
+usage:
+  version: 2.1
+
+  orbs:
+    po: fernfernfern/python-orb@0.0.10
+
+  workflows:
+    test:
+      jobs:
+        - po/python-job:
+            python-version: "3.7"
+            with-pipenv: true
+            test-steps: |
+              pipenv run python -m pytest

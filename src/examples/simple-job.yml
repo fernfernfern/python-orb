@@ -1,0 +1,29 @@
+description: >
+  Example of using some of the commands and executors available in the python-orb
+
+usage:
+  version: 2.1
+
+  orbs:
+    po: fernfernfern/python-orb@0.0.10
+
+  jobs:
+    my-job:
+      parameters:
+        e:
+          type: executor
+      executor: << parameters.e >>
+      steps:
+        - checkout 
+        - po/install-pipenv:
+            and-deps: true
+        - run: echo do anything you want to prepare
+
+  workflows:
+    test:
+      jobs:
+        - my-job:
+            e:
+              name: po/default
+              python-version: "3.7"
+              debian-release: "stretch"
