@@ -1,0 +1,28 @@
+description: >
+  install pip
+
+parameters:
+  with-venv:
+    default: false
+  and-deps:
+    default: false
+
+steps:
+  - run: curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py && python /tmp/get-pip.py
+  - run: sudo pip install virtualenv
+  - when:
+    condition: << parameters.and-deps >>
+    steps:
+      - run: sudo chown -R circleci:circleci /usr/local/bin
+      - run: virtualenv venv
+      - run: echo source venv/bin/activate >> $BASH_ENV
+      - restore_cache:  # ensure this step occurs *before* installing dependencies
+          key: deps-{{ .Branch }}-{{ checksum "requirements.txt" }}
+      - run:
+          command: |
+            pip install -r "requirements.txt"
+      - save_cache:
+          key: deps-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          paths:
+            - "venv"
+            - "/usr/local/bin"

@@ -5,6 +5,9 @@ parameters:
   with-pipenv:
     default: false
     type: boolean
+  with-pip:
+    default: false
+    type: boolean
   test-steps:
     default: "pipenv run python manage.py test"
     type: string
@@ -27,5 +30,10 @@ steps:
       steps:
         - install-pipenv:
             and-deps: << parameters.with-pipenv >>
+  - when:
+      condition: << parameters.with-pip >>
+      steps:
+        - install-pip:
+            and-deps: << parameters.with-pip >>
   - run: |
       << parameters.test-steps >>
