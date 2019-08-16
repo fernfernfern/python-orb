@@ -2,7 +2,7 @@ description: >
   This job to run simple python setups
 
 parameters:
-  install-deps:
+  with-pipenv:
     default: false
     type: boolean
   test-steps:
@@ -20,9 +20,17 @@ executor:
   python-version: << parameters.python-version >>
   debian-release: << parameters.debian-release >>
 
+commands:
+  install-dependencies:
+    steps:
+      - when:
+          condition: << parameters.with-pipenv >>
+          steps:
+            - install-pipenv:
+                and-deps: << parameters.install-deps >>
+
 steps:
   - checkout
-  - install-pipenv:
-      and-deps: << parameters.install-deps >>
+  - install-dependencies
   - run: |
       << parameters.test-steps >>
