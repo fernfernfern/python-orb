@@ -23,9 +23,9 @@ executor:
 steps:
   - checkout
   - when:
-    condition: << parameters.with-pipenv >>
-    steps:
-      - install-pipenv:
-          and-deps: << parameters.install-deps >>
+      condition: << parameters.with-pipenv >>
+      steps:
+        - install-pipenv:
+            and-deps: << parameters.with-pipenv >>
   - run: |
       << parameters.test-steps >>
